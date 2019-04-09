@@ -1,5 +1,6 @@
 import { Selector, ClientFunction } from 'testcafe';
 
+
 fixture `Test Page`
     .page `https://www.kupujemprodajem.com/`;
 
@@ -16,20 +17,23 @@ fixture `Test Page`
     const price = Selector('input').withAttribute('name', 'data[price]');
     const currency = Selector('input').withAttribute('name', 'data[currency]');
     const content = Selector('iframe').withAttribute('title', 'Rich Text AreaPress ALT-F10 for toolbar. Press ALT-0 for help');
-    const getSaleAmount = ClientFunction(() => {
-        const elements = document.querySelector('.dx-datagrid-rowsview').querySelectorAll('td:nth-child(3),td:nth-child(7)');
-        const array = [];
+    const italicB = Selector('span').withAttribute('class', 'mce_bold');
+    const pointer = Selector('.mceContentBody ');
 
-        for (let i = 0; i <= elements.length - 2; i+=2) {
-            const customerName  = elements[i+1].textContent;
-            const saleAmount = elements[i].textContent;
+    // const getSaleAmount = ClientFunction(() => {
+    //     const elements = document.querySelector('.dx-datagrid-rowsview').querySelectorAll('td:nth-child(3),td:nth-child(7)');
+    //     const array = [];
 
-            if (customerName && saleAmount)
-                array.push(`Customer ${customerName}: ${saleAmount}`);
-        }
+    //     for (let i = 0; i <= elements.length - 2; i+=2) {
+    //         const customerName  = elements[i+1].textContent;
+    //         const saleAmount = elements[i].textContent;
 
-        return array;
-    });
+    //         if (customerName && saleAmount)
+    //             array.push(`Customer ${customerName}: ${saleAmount}`);
+    //     }
+
+    //     return array;
+    // });
     
     test(`Complete test`, async t => {
 
@@ -54,11 +58,11 @@ fixture `Test Page`
             .click(currency)
             .hover(content)
             .click(content)
-            .switchToIframe(content)
-            .setNativeDialogHandler(() => true)
-            .navigateTo('https://js.devexpress.com/')
+            .switchToIframe(Selector('iframe').withAttribute('title', 'Rich Text AreaPress ALT-F10 for toolbar. Press ALT-0 for help'))
+            // .typeText(Selector('#tinymce').withAttribute('dir', 'ltr'), 'Test test') // Ne moze da pristupi preko Selectora #tinymce,niti bilo kog drugog
+            .navigateTo('https://www.tiny.cloud/')
             .wait(5000)
             .switchToMainWindow();
-           
+                   
     });
 
